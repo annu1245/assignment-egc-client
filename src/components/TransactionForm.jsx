@@ -53,7 +53,7 @@ const TransactionForm = () => {
                             className="select w-full"
                             {...register("category", {
                                 required: "Category is required",
-                                validate: (value) => value != "-- select category --" || "Category is required"
+                                validate: (value) => value != "-- select category --" || "Category is required",
                             })}
                         >
                             <option disabled>-- select category --</option>
@@ -75,11 +75,14 @@ const TransactionForm = () => {
 
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend">Select a date</legend>
-                        <input type="date" className="py-2.5 text-sm px-2 rounded-sm bg-[#1d232a] border-1 border-[#464e58]" 
+                        <input
+                            type="date"
+                            className="py-2.5 text-sm px-2 rounded-sm bg-[#1d232a] border-1 border-[#464e58]"
                             {...register("date", {
                                 required: "Date is required",
-                                validate: (value) => validator.isDate(String(value)) || "Invalid date"
-                            })} />
+                                validate: (value) => validator.isDate(String(value)) || "Invalid date",
+                            })}
+                        />
                         {errors.date && <p className="text-red-500">{errors.date.message}</p>}
                     </fieldset>
 
