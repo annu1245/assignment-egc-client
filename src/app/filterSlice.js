@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     type: "",
     category: "",
-    date: "",
+    startDate: "",
+    endDate: "",
 };
 
 const filterSlice = createSlice({

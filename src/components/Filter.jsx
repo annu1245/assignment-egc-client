@@ -4,6 +4,7 @@ import { getTodayDate } from "../utils/form.js";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setFilters } from "../app/filterSlice.js";
+import { toast } from "react-toastify";
 
 const Filter = () => {
     const { register, watch, reset } = useForm();
@@ -17,6 +18,10 @@ const Filter = () => {
             if (value.category == "-- select category --") {
                 value.category = "";
             }
+            if (value.startDate && value.endDate && value.startDate > value.endDate) {
+                toast.error("End date cannot be before start date!");
+                return;
+            }
             dispatch(setFilters(value));
         });
         return () => subscription.unsubscribe();
@@ -26,7 +31,8 @@ const Filter = () => {
         reset({
             type: "-- select type --",
             category: "-- select category --",
-            date: "",
+            startDate: "",
+            endDate: "",
         });
     };
 
@@ -45,15 +51,27 @@ const Filter = () => {
                 <SelectCategory register={register} />
             </div>
 
-            <div>
-                <legend className="fieldset-legend">Select a date</legend>
-                <input
-                    type="date"
-                    max={getTodayDate()}
-                    className="py-2.5 text-sm px-2 rounded-sm bg-[#1d232a] border-1 border-[#464e58]"
-                    {...register("date")}
-                />
+            <div className="flex gap-4 items-end">
+                <div>
+                    <legend className="fieldset-legend">Start Date</legend>
+                    <input
+                        type="date"
+                        max={getTodayDate()}
+                        className="py-2.5 text-sm px-2 rounded-sm bg-[#1d232a] border-1 border-[#464e58]"
+                        {...register("startDate")}
+                    />
+                </div>
+                <div>
+                    <legend className="fieldset-legend">End Date</legend>
+                    <input
+                        type="date"
+                        max={getTodayDate()}
+                        className="py-2.5 text-sm px-2 rounded-sm bg-[#1d232a] border-1 border-[#464e58]"
+                        {...register("endDate")}
+                    />
+                </div>
             </div>
+
             <div className="flex gap-x-5 items-end">
                 <button className="btn bg-[#961bff] text-white" onClick={handleReset}>
                     <span className="text-xl">⟳</span>Reset
