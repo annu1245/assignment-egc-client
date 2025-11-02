@@ -4,7 +4,7 @@ import SelectCategory from "./SelectCategory.jsx";
 import { getTodayDate } from "../utils/form.js";
 import { useCreateTransactionMutation } from "../services/api.js";
 import { useEffect } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const TransactionDialog = () => {
     const {
@@ -25,23 +25,23 @@ const TransactionDialog = () => {
                 }
             } else {
                 const message = error.data?.message;
-                setError("serverError", { message })
+                setError("serverError", { message });
                 toast.error(message);
             }
         }
-    }, [ error ]);
+    }, [error]);
 
     useEffect(() => {
         if (isSuccess) {
             toast.success("Transaction created");
         }
-    }, [ isSuccess ]);
+    }, [isSuccess]);
 
     const onSubmit = async (data) => {
         const payload = {
             ...data,
-            type: "expense"
-        }
+            type: "expense",
+        };
         createTransaction(payload);
     };
 
@@ -65,9 +65,7 @@ const TransactionDialog = () => {
                             })}
                         />
                         {errors.amount && <p className="text-red-500">{errors.amount.message}</p>}
-                    </fieldset>
 
-                    <fieldset className="fieldset">
                         <legend className="fieldset-legend">Description</legend>
                         <textarea
                             className={`textarea w-full h-24 ${errors?.description ? "border-red-500" : ""}`}
@@ -77,11 +75,9 @@ const TransactionDialog = () => {
                             })}
                         ></textarea>
                         {errors.description && <p className="text-red-500">{errors.description.message}</p>}
-                    </fieldset>
 
-                    <SelectCategory register={register} errors={errors} />
+                        <SelectCategory register={register} errors={errors} />
 
-                    <fieldset className="fieldset">
                         <legend className="fieldset-legend">Select a date</legend>
                         <input
                             type="date"
@@ -93,11 +89,11 @@ const TransactionDialog = () => {
                             })}
                         />
                         {errors.date && <p className="text-red-500">{errors.date.message}</p>}
-                    </fieldset>
 
-                    <div className="card-actions justify-center mt-4">
-                        <button className="btn w-full bg-amber-700 text-black text-lg">Submit</button>
-                    </div>
+                        <div className="card-actions justify-center mt-4">
+                            <button className="btn w-full bg-amber-700 text-black text-lg">Submit</button>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
         </dialog>

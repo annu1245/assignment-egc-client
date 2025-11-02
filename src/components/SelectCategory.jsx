@@ -10,25 +10,23 @@ const SelectCategory = ({ register, errors }) => {
 
     return (
         <>
-            <fieldset className="fieldset">
-                <legend className="fieldset-legend">Category</legend>
-                <select
-                    defaultValue="-- select category --"
-                    className="select w-full"
-                    {...register("category", {
-                        required: "Category is required",
-                        validate: (value) => value != "-- select category --" || "Category is required",
-                    })}
-                >
-                    <option disabled>-- select category --</option>
-                    {Object.entries(categories).map(([key, value]) => (
-                        <option key={value} value={value}>
-                            {key}
-                        </option>
-                    ))}
-                </select>
-                {errors.category && <p className="text-red-500">{errors.category.message}</p>}
-            </fieldset>
+            <legend className="fieldset-legend">Category</legend>
+            <select
+                defaultValue="-- select category --"
+                className="select w-full"
+                {...register("category", {
+                    required: "Category is required",
+                    validate: (value) => value != "-- select category --" || "Category is required",
+                })}
+            >
+                <option disabled>-- select category --</option>
+                {Object.entries(categories).map(([key, value]) => (
+                    <option key={value} value={value}>
+                        {key}
+                    </option>
+                ))}
+            </select>
+            {errors?.category && <p className="text-red-500">{errors?.category.message}</p>}
         </>
     );
 };
