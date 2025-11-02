@@ -1,19 +1,24 @@
 import { useForm } from "react-hook-form";
 import SelectCategory from "./SelectCategory.jsx";
 import { getTodayDate } from "../utils/form.js";
+import { useEffect } from "react";
 
 const Filter = () => {
-    const { register } = useForm();
+    const { register, watch } = useForm();
+
+    useEffect(() => {
+        const subscription = watch((value, { name, type }) => {
+            console.log(value, name, type);
+        });
+        return () => subscription.unsubscribe();
+    }, [watch]);
+
     return (
         <div className="flex justify-between">
             <fieldset className="fieldset flex justify-between">
                 <div>
                     <legend className="fieldset-legend">Type</legend>
-                    <select
-                        defaultValue="-- select type --"
-                        className="select w-full"
-                        {...register("type")}
-                    >
+                    <select defaultValue="-- select type --" className="select w-full" {...register("type")}>
                         <option disabled>-- select type --</option>
                         <option value="income">Income</option>
                         <option value="expense">Expense</option>
