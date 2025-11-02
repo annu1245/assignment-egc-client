@@ -28,12 +28,12 @@ function Transactions() {
                         {data?.transactions?.map((transaction, index) => (
                             <tr key={transaction._id} className="hover:bg-base-300">
                                 <td>{index + 1}</td>
-                                <td className={transaction.type == "expense" ? "text-[#ffaf3b]" : "text-[#1b9cff]"}>
+                                <td className={`capitalize ${transaction.type == "expense" ? "text-[#ffaf3b]" : "text-[#1b9cff]"}`}>
                                     {transaction.type}
                                 </td>
                                 <td>{formatDate(transaction.date)}</td>
-                                <td>{transaction.amount}</td>
-                                <td>{transaction.category}</td>
+                                <td>₹ {transaction.amount}</td>
+                                <td className="capitalize">{transaction.category}</td>
                                 <td>{transaction.description}</td>
                             </tr>
                         ))}
