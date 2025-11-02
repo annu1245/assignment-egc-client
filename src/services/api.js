@@ -8,12 +8,23 @@ export const api = createApi({
             query: () => "/api/transactions",
         }),
         getCategories: builder.query({
-            query: () => "api/transactions/categories",
+            query: () => "/api/transactions/categories",
             transformResponse: (response) => {
                 return response?.data?.categories;
             },
         }),
+        createTransaction: builder.mutation({
+            query: (formData) => ({
+                url: "/api/transactions",
+                method: "POST",
+                body: formData,
+            }),
+        }),
     }),
 });
 
-export const { useGetTransactionsQuery, useGetCategoriesQuery } = api;
+export const {
+    useGetTransactionsQuery,
+    useGetCategoriesQuery,
+    useCreateTransactionMutation
+} = api;

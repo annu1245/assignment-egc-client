@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import validator from "validator";
 import SelectInput from "./SelectInput";
 import { getTodayDate } from "../utils/form.js";
+import { useCreateTransactionMutation } from "../services/api.js";
+import { useEffect } from "react";
+import { toast } from 'react-toastify';
 
 const TransactionForm = () => {
     const {
@@ -11,15 +14,43 @@ const TransactionForm = () => {
         setError,
     } = useForm();
 
+    const [createTransaction, { data, error, isSuccess, isLoading }] = useCreateTransactionMutation();
+
+    useEffect(() => {
+        if (error) {
+            if (error.status == 400) {
+                for (const field in error.data?.errors) {
+                    const message = error.data?.errors[field];
+                    setError(field, { message });
+                }
+            } else {
+                const message = error.data?.message;
+                setError("serverError", { message })
+                toast.error(message);
+            }
+        }
+    }, [ error ]);
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Transaction created");
+        }
+    }, [ isSuccess ]);
+
     const onSubmit = async (data) => {
-        try {
-            console.log(data);
-        } catch (error) {}
+        const payload = {
+            ...data,
+            type: "expense"
+        }
+        createTransaction(payload);
     };
+
     return (
         <div className="card card-border bg-base-300 w-96 m-auto mt-10">
             <div className="card-body">
                 <h2 className="card-title m-auto text-xl">Form</h2>
+
+                {errors.serverError && <p className="text-red-500">{errors.serverError.message}</p>}
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <fieldset className="fieldset">
