@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import validator from "validator";
+import SelectInput from "./SelectInput";
+import { getTodayDate } from "../utils/form.js";
 
 const TransactionForm = () => {
     const {
@@ -24,7 +26,7 @@ const TransactionForm = () => {
                         <legend className="fieldset-legend">Amount</legend>
                         <input
                             type="number"
-                            className={`input w-full ${errors?.amount ? "border-red-500" : ""} `}
+                            className={`input w-full [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [appearance:textfield] ${errors?.amount ? "border-red-500" : ""} `}
                             placeholder="Amount"
                             {...register("amount", {
                                 required: "amount is required",
@@ -46,37 +48,13 @@ const TransactionForm = () => {
                         {errors.description && <p className="text-red-500">{errors.description.message}</p>}
                     </fieldset>
 
-                    <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Category</legend>
-                        <select
-                            defaultValue="-- select category --"
-                            className="select w-full"
-                            {...register("category", {
-                                required: "Category is required",
-                                validate: (value) => value != "-- select category --" || "Category is required",
-                            })}
-                        >
-                            <option disabled>-- select category --</option>
-                            <option value={"salary"}>Salary</option>
-                            <option value={"business"}>business</option>
-                            <option value={"household"}>household</option>
-                            <option value={"emi"}>emi</option>
-                            <option value={"groceries"}>groceries</option>
-                            <option value={"entertainment"}>entertainment</option>
-                            <option value={"shopping"}>shopping</option>
-                            <option value={"travel"}>travel</option>
-                            <option value={"food"}>food</option>
-                            <option value={"education"}>education</option>
-                            <option value={"medical"}>medical</option>
-                            <option value={"others"}>others</option>
-                        </select>
-                        {errors.category && <p className="text-red-500">{errors.category.message}</p>}
-                    </fieldset>
+                    <SelectInput register={register} errors={errors} />
 
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend">Select a date</legend>
                         <input
                             type="date"
+                            max={getTodayDate()}
                             className="py-2.5 text-sm px-2 rounded-sm bg-[#1d232a] border-1 border-[#464e58]"
                             {...register("date", {
                                 required: "Date is required",

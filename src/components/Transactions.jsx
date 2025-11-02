@@ -11,7 +11,7 @@ function Transactions() {
             <h1>Transactions</h1>
             <ul>
                 {transactions?.data?.map((post) => (
-                    <li key={post.id}>
+                    <li key={post._id}>
                         {post.type} - {post.amount} - {post.category} - {post.description}
                     </li>
                 ))}

@@ -7,7 +7,13 @@ export const api = createApi({
         getTransactions: builder.query({
             query: () => "/api/transactions",
         }),
+        getCategories: builder.query({
+            query: () => "api/transactions/categories",
+            transformResponse: (response) => {
+                return response?.data?.categories;
+            },
+        }),
     }),
 });
 
-export const { useGetTransactionsQuery } = api;
+export const { useGetTransactionsQuery, useGetCategoriesQuery } = api;
