@@ -1,12 +1,10 @@
-import Filter from "./Filter";
-import TransactionDialog from "./TransactionDialog";
+import TransactionAction from "./TransactionAction";
 import Transactions from "./Transactions";
 
 const Dashboard = () => {
     return (
         <div className="w-10/12 m-auto">
-            {/* <TransactionDialog /> */}
-            <Filter />
+            <TransactionAction />
             <Transactions />
         </div>
     );
