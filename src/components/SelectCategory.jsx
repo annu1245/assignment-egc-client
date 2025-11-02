@@ -2,7 +2,7 @@ import React from "react";
 import { useGetCategoriesQuery } from "../services/api";
 import validator from "validator";
 
-const SelectInput = ({ register, errors }) => {
+const SelectCategory = ({ register, errors }) => {
     const { data: categories, error: categoryError, isLoading } = useGetCategoriesQuery();
 
     if (isLoading) return <div>Loading...</div>;
@@ -33,4 +33,4 @@ const SelectInput = ({ register, errors }) => {
     );
 };
 
-export default SelectInput;
+export default SelectCategory;

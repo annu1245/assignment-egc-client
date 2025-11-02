@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import validator from "validator";
-import SelectInput from "./SelectInput";
+import SelectCategory from "./SelectCategory.jsx";
 import { getTodayDate } from "../utils/form.js";
 import { useCreateTransactionMutation } from "../services/api.js";
 import { useEffect } from "react";
 import { toast } from 'react-toastify';
 
-const TransactionForm = () => {
+const TransactionDialog = () => {
     const {
         register,
         handleSubmit,
@@ -46,7 +46,7 @@ const TransactionForm = () => {
     };
 
     return (
-        <div className="card card-border bg-base-300 w-96 m-auto mt-10">
+        <dialog className="card card-border bg-base-300 w-96 m-auto mt-10">
             <div className="card-body">
                 <h2 className="card-title m-auto text-xl">Form</h2>
 
@@ -79,7 +79,7 @@ const TransactionForm = () => {
                         {errors.description && <p className="text-red-500">{errors.description.message}</p>}
                     </fieldset>
 
-                    <SelectInput register={register} errors={errors} />
+                    <SelectCategory register={register} errors={errors} />
 
                     <fieldset className="fieldset">
                         <legend className="fieldset-legend">Select a date</legend>
@@ -100,8 +100,8 @@ const TransactionForm = () => {
                     </div>
                 </form>
             </div>
-        </div>
+        </dialog>
     );
 };
 
-export default TransactionForm;
+export default TransactionDialog;
