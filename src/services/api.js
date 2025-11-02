@@ -5,7 +5,13 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
     endpoints: (builder) => ({
         getTransactions: builder.query({
-            query: () => "/api/transactions",
+            query: (params = {}) => ({
+                url: "/api/transactions",
+                params,
+            }),
+            transformResponse: (response) => {
+                return response?.data;
+            },
         }),
         getCategories: builder.query({
             query: () => "/api/transactions/categories",
@@ -23,8 +29,4 @@ export const api = createApi({
     }),
 });
 
-export const {
-    useGetTransactionsQuery,
-    useGetCategoriesQuery,
-    useCreateTransactionMutation
-} = api;
+export const { useGetTransactionsQuery, useGetCategoriesQuery, useCreateTransactionMutation } = api;
